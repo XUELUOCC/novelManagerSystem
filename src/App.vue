@@ -12,6 +12,7 @@
   html,body{
     height:100%;
     width: 100%;
+    min-width:800px;
     /*margin: 0;*/
     /*padding: 0;*/
   }

@@ -2,8 +2,8 @@
     <div>
         <div class="header">
             <div class="headerLeft">
-                <span v-if="flag"><i class="el-icon-s-unfold"></i></span>
-                <span v-else><i class="el-icon-s-fold"></i></span>
+                <span v-if="flag" @click="unfold"><i class="el-icon-s-fold"></i></span>
+                <span v-else @click="fold"><i class="el-icon-s-unfold"></i></span>
                 <p>后台管理系统</p>
             </div>
             <div class="headerRight">
@@ -44,7 +44,14 @@
             }
         },
         methods:{
+            //不折叠
+            unfold(){
 
+            },
+            //折叠
+            fold(){
+
+            }
         }
     }
 </script>
@@ -68,6 +75,7 @@
                 color:#fff;
                 margin-right:10px;
                 font-size:24px;
+                cursor: pointer;
             }
             p{
                 color:#fff;

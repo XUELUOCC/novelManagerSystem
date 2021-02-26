@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 
-    <el-container>
+    <el-container class="content1">
       <el-header >
         <Header></Header>
       </el-header>
@@ -9,10 +9,15 @@
         <el-aside class="side">
           <SideBar></SideBar>
         </el-aside>
-        <el-main>
-          <Tags></Tags>
-          <router-view></router-view>
-        </el-main>
+        <el-container>
+          <el-main>
+            <div class="tags">
+              <Tags></Tags>
+            </div>
+            <router-view></router-view>
+          </el-main>
+        </el-container>
+
       </el-container>
     </el-container>
 
@@ -47,12 +52,23 @@ export default {
   .homeContainer{
 
   }
+  .home{
+    width:100%;
+    height:100%;
+  }
+  .content1{
+    width:100%;
+    height:100%;
+  }
   /deep/.el-header{
     padding:0!important;
     height:80px!important;
   }
   /deep/.el-main{
-    padding-top:10px!important;
+    padding:0px 0px !important;
+    background-color:#f0f0f0;
+    height:100%;
+    width:100%;
   }
   .side{
     width:250px!important;

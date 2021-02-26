@@ -1,5 +1,5 @@
 <template>
-    <div>用户信息页面</div>
+    <div class="containerContent">用户信息页面</div>
 </template>
 
 <script>

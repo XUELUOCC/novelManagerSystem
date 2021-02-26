@@ -1,5 +1,5 @@
 <template>
-    <div>小说信息页面</div>
+    <div class="containerContent">小说信息页面</div>
 </template>
 
 <script>

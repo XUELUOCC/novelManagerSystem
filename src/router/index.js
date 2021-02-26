@@ -57,4 +57,10 @@ const router = new VueRouter({
   routes
 })
 
+//解决频繁点击路由会报错的问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
 export default router
