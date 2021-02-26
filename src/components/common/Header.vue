@@ -17,14 +17,14 @@
                             <el-avatar icon="el-icon-user-solid"></el-avatar>
                         </div>
                         <div>
-                            <el-dropdown>
+                            <el-dropdown @command="handleLogin">
                               <span class="el-dropdown-link">
                                 admin
                                 <i class="el-icon-arrow-down el-icon--right"></i>
                               </span>
                               <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>注销</el-dropdown-item>
-                                <el-dropdown-item>个人信息</el-dropdown-item>
+                                <el-dropdown-item command="loginout">注销</el-dropdown-item>
+                                <el-dropdown-item command="userInfo">个人信息</el-dropdown-item>
                               </el-dropdown-menu>
                             </el-dropdown>
                         </div>
@@ -51,6 +51,17 @@
             //折叠
             fold(){
 
+            },
+            //登出注销
+            Loginout(){
+                this.$router.push('/login')
+            },
+            //个人信息
+            userInfo(){
+
+            },
+            handleLogin(command){
+                return command==='loginout'? this.Loginout():this.userInfo()
             }
         }
     }
