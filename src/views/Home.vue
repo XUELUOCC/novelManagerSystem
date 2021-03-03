@@ -7,7 +7,7 @@
       </el-header>
       <el-container>
         <el-aside class="side">
-          <SideBar></SideBar>
+          <SideBar style="height:100%;"></SideBar>
         </el-aside>
         <el-container>
           <el-main>
@@ -71,6 +71,6 @@ export default {
     width:100%;
   }
   .side{
-    width:250px!important;
+    width:auto!important;
   }
 </style>

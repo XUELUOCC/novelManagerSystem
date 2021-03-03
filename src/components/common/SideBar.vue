@@ -2,20 +2,22 @@
     <div>
         <div class="sidebar">
             <el-menu
-                    default-active="onRoutes"
-                    class="el-menu-vertical-demo"
+                    :default-active="onRoutes"
+                    class="sidebar-el-menu"
                     @open="handleOpen"
                     @close="handleClose"
                     @select="selectMenu"
                     background-color="#324157"
                     text-color="#fff"
+                    :collapse="isCollapse"
+                    unique-opened
                     router
-                    active-text-color="#ffd04b">
+                    active-text-color="#409eff">
                 <template v-for="item in navList">
                     <template v-if="item.children">
                         <el-submenu :index="item.path" >
                             <template slot="title">
-                                <i class="el-icon-location"></i>
+                                <i :class="item.icon"></i>
                                 <span>{{item.name}}</span>
                             </template>
                             <template v-for="tip in item.children">
@@ -28,7 +30,10 @@
                         </el-submenu>
                     </template>
                     <template v-else>
-                        <el-menu-item :index="item.path">{{item.name}}</el-menu-item>
+                        <el-menu-item :index="item.path">
+                            <i :class="item.icon"></i>
+                            <span slot="title">{{ item.name }}</span>
+                        </el-menu-item>
                     </template>
                 </template>
 
@@ -39,20 +44,24 @@
 </template>
 
 <script>
+    import bus from '../common/bus'
     export default {
         name: "SideBar",
         data(){
             return{
                 routeList:[],
                 routeName:"",
+                isCollapse:false,
                 navList:[
                     {
                         name:'首页',
-                        path:'dashboard'
+                        path:'dashboard',
+                        icon:'el-icon-s-home'
                     },
                     {
                         name:'小说信息',
                         path:'novle',
+                        icon:'el-icon-pie-chart',
                         children:[
                             {
                                 name:'小说信息',
@@ -73,6 +82,7 @@
                     {
                         name:'用户信息',
                         path:'user',
+                        icon:'el-icon-user',
                         children:[
                             {
                                 name:'用户信息',
@@ -95,8 +105,23 @@
                 // this.routeName=to.path;
             }
         },
+        created(){
+            //接收header传过来的是否折叠侧边栏
+            bus.$on('collapse',msg=>{
+                console.log('jjjj'+msg)
+                this.isCollapse=msg;
+            })
+        },
+        computed: {
+            onRoutes:function(){
+                console.log(this.$route.path.replace('/', ''))
+                return this.$route.path.replace('/', '');
+            }
+        },
         mounted(){
+            if(this.collapse==false){
 
+            }
         },
         methods:{
             handleOpen(key, keyPath) {
@@ -144,12 +169,13 @@
 <style lang="scss" scoped>
     .sidebar {
         display: block;
-        width:250px;
-        position: absolute;
-        left: 0;
-        top: 80px;
-        bottom: 0;
-        overflow-y: scroll;
+        /*width:250px;*/
+        height:100%;
+        /*position: absolute;*/
+        /*left: 0;*/
+        /*top: 80px;*/
+        /*bottom: 0;*/
+        /*overflow-y: scroll;*/
     }
     .sidebar::-webkit-scrollbar {
         width: 0;

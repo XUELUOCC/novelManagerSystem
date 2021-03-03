@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="header">
-            <div class="headerLeft">
-                <span v-if="flag" @click="unfold"><i class="el-icon-s-fold"></i></span>
-                <span v-else @click="fold"><i class="el-icon-s-unfold"></i></span>
+            <div class="headerLeft" @click="collapseChange">
+                <span v-if="!collapse"><i class="el-icon-s-fold"></i></span>
+                <span v-else><i class="el-icon-s-unfold"></i></span>
                 <p>后台管理系统</p>
             </div>
             <div class="headerRight">
@@ -36,21 +36,24 @@
 </template>
 
 <script>
+    import bus from '../common/bus'
     export default {
         name: "Header",
         data(){
             return{
-                flag:true,
+                collapse:false, //折叠侧边栏的变量
+            }
+        },
+        mounted(){
+            if (document.body.clientWidth < 1500) {
+                this.collapseChange();//进来后，默认折叠，传递collapse==true;
             }
         },
         methods:{
-            //不折叠
-            unfold(){
-
-            },
-            //折叠
-            fold(){
-
+            //侧边栏折叠
+            collapseChange(){
+                this.collapse=!this.collapse;
+                bus.$emit('collapse',this.collapse)
             },
             //登出注销
             Loginout(){
