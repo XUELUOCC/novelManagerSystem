@@ -6,13 +6,12 @@
                     class="sidebar-el-menu"
                     @open="handleOpen"
                     @close="handleClose"
-                    @select="selectMenu"
                     background-color="#324157"
                     text-color="#fff"
                     :collapse="isCollapse"
                     unique-opened
                     router
-                    active-text-color="#409eff">
+                    active-text-color="#409eff">    <!--@select="selectMenu"-->
                 <template v-for="item in navList">
                     <template v-if="item.children">
                         <el-submenu :index="item.path" >
@@ -131,37 +130,27 @@
                 // console.log(key, keyPath);
             },
             //选中菜单
-            selectMenu(index,indexPath){
-                // console.log(index,indexPath)
-                // console.log(index)
-                this.navList.forEach((item)=>{
-                    if(item.path==index){
-                        // this.routeList.push(item.name)
-                        this.routeName=item.name;
-                    }else if(item.children){
-                        this.setName(item.children,index)
-                    }
-                })
-                // for(let i=0;i<this.routeList.length;i++){
-                //     for(let j=i+1;j<this.routeList.length;j++){
-                //         if(this.routeList[i]==this.routeList[j]){
-                //             this.routeList.splice(j,1)
-                //         }
-                //     }
-                // }
-                // console.log(this.routeList)
-                console.log(this.routeName)
-                localStorage.setItem('routeName',this.routeName);
-            },
-            //递归查找路由名称
-            setName(arr,route){
-                arr.forEach((tip)=>{
-                    if(tip.path==route){
-                        // this.routeList.push(tip.name)
-                        this.routeName=tip.name;
-                    }
-                })
-            }
+            // selectMenu(index,indexPath){
+            //     // console.log(index,indexPath)
+            //     this.navList.forEach((item)=>{
+            //         if(item.path==index){
+            //             this.routeName=item.name;
+            //         }else if(item.children){
+            //             this.setName(item.children,index)
+            //         }
+            //     })
+            //     console.log(this.routeName)
+            //     localStorage.setItem('routeName',this.routeName);
+            // },
+            // //递归查找路由名称
+            // setName(arr,route){
+            //     arr.forEach((tip)=>{
+            //         if(tip.path==route){
+            //             // this.routeList.push(tip.name)
+            //             this.routeName=tip.name;
+            //         }
+            //     })
+            // }
         }
     }
 </script>

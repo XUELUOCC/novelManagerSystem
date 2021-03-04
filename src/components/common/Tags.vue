@@ -53,10 +53,15 @@
         methods:{
             handleClose(index) {
                 if(this.dynamicTags.length>1){
-                    this.dynamicTags.splice(index, 1);
-                    //点击删除后，需要展现的标签-----1.点击最后一个，展现的是原先的上一个index-1  -----2.点击中间的，需要展现的是原先的上一个，其索引在删除后和之前的索引相同
+                    const delItem= this.dynamicTags.splice(index, 1)[0]; //获取点击删除时的tags
+                    //点击删除后，需要展现的标签
+                    // 1.点击最后一个，展现的是原先的上一个index-1
+                    // 2.点击中间的，需要展现的是原先的上一个，其索引在删除后和之前的索引相同
                     const item=this.dynamicTags[index] ? this.dynamicTags[index] : this.dynamicTags[index-1]
-                    this.$router.push(item.path)
+                    //判断是否是点击正在显示的页面tags,如果是则进行跳转，否则不跳转
+                    if(delItem.path==this.$route.fullPath){
+                        this.$router.push(item.path)
+                    }
                 }else{
 
                 }
@@ -64,7 +69,7 @@
             },
             //动态设置class
             isActive(path){
-                console.log(path,this.$route.fullPath)
+                // console.log(path,this.$route.fullPath)
                 return path===this.$route.fullPath
             },
             //设置tags
