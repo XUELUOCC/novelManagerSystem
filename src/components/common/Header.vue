@@ -9,7 +9,7 @@
             <div class="headerRight">
                 <div class="setting">
                     <div class="settingIcon">
-                        <span><i class="el-icon-rank"></i></span>
+                        <span class="screen" @click="screen"><i class="el-icon-rank"></i></span>
                         <span><i class="el-icon-bell"></i></span>
                     </div>
                     <div class="userInfo">
@@ -37,11 +37,14 @@
 
 <script>
     import bus from '../common/bus'
+    import screenfull from 'screenfull'
     export default {
         name: "Header",
         data(){
             return{
                 collapse:false, //折叠侧边栏的变量
+                //默认不全屏
+                fullscreen: false
             }
         },
         mounted(){
@@ -65,6 +68,33 @@
             },
             handleLogin(command){
                 return command==='loginout'? this.Loginout():this.userInfo()
+            },
+            //全屏
+            screen(){
+                let element = document.documentElement;
+                if (this.fullscreen) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                } else {
+                    if (element.requestFullscreen) {
+                        element.requestFullscreen();
+                    } else if (element.webkitRequestFullScreen) {
+                        element.webkitRequestFullScreen();
+                    } else if (element.mozRequestFullScreen) {
+                        element.mozRequestFullScreen();
+                    } else if (element.msRequestFullscreen) {
+                        // IE11
+                        element.msRequestFullscreen();
+                    }
+                }
+                this.fullscreen = !this.fullscreen;
             }
         }
     }
@@ -108,6 +138,14 @@
                     margin-right:15px;
                     span{
                         margin-left:10px;
+                        &:hover{
+                            cursor:pointer;
+                        }
+                    }
+                    .screen{
+                        i{
+                            transform:rotate(45deg);
+                        }
                     }
                 }
                 .userInfo{
