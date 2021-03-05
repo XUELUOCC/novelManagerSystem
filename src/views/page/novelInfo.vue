@@ -4,7 +4,12 @@
 
 <script>
     export default {
-        name: "novelInfo"
+        name: "novelInfo",
+        data(){
+            return{
+
+            }
+        }
     }
 </script>
 
