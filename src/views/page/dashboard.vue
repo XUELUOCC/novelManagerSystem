@@ -1,6 +1,8 @@
 <template>
     <div class="containerContent">
-        <div class="rowContent"></div>
+        <div class="rowContent">
+            <el-button type="primary" @click="test">测试接口</el-button>
+        </div>
         <table-module
             :tableData="tableData"
             :operates="operates"
@@ -14,6 +16,8 @@
 
 <script>
     import tableModule from '../../components/common/tableModule'
+    import {testApi} from "../../api";
+
     export default {
         name: "dashboard",
         components:{
@@ -83,6 +87,14 @@
             },
             del(){
                 console.log('del')
+            },
+            test(){
+                let params={
+                    id:'1'
+                }
+                testApi(params).then((res)=>{
+                    console.log(res)
+                })
             }
         }
     }

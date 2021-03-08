@@ -89,7 +89,10 @@
                             message: '登录成功',
                             type: 'success'
                         });
+                        let token='tokenhabdsfvkabv'
+                        this.$store.commit('setToken',token);
                         this.$router.push('/')
+                        console.log(this.$store.state.token)
                     } else {
                         this.$message.error('登录失败');
                         return false;

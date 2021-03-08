@@ -60,7 +60,8 @@
             },
             //登出注销
             Loginout(){
-                this.$router.push('/login')
+                this.$router.push('/login');
+                this.$store.commit('delToken');
             },
             //个人信息
             userInfo(){
