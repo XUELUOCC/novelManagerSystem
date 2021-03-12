@@ -62,6 +62,7 @@
             Loginout(){
                 this.$router.push('/login');
                 this.$store.commit('delToken');
+                this.$store.commit('delRouter');
             },
             //个人信息
             userInfo(){

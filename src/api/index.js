@@ -7,3 +7,11 @@ export const testApi =(query)=>{
         parmas:query
     });
 }
+
+export const routerApi =(query)=>{
+    return request({
+        url:'./routerPermission.json',
+        method:'get',
+        parmas:query
+    });
+}

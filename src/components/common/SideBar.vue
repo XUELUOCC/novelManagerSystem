@@ -13,10 +13,10 @@
                     router
                     active-text-color="#409eff">    <!--@select="selectMenu"-->
                 <template v-for="item in navList">
-                    <template v-if="item.children">
+                    <template v-if="item.children && item.meta.flag=='2'">
                         <el-submenu :index="item.path" >
                             <template slot="title">
-                                <i :class="item.icon"></i>
+                                <i :class="item.meta.icon"></i>
                                 <span>{{item.name}}</span>
                             </template>
                             <template v-for="tip in item.children">
@@ -28,10 +28,10 @@
                             </template>
                         </el-submenu>
                     </template>
-                    <template v-else>
-                        <el-menu-item :index="item.path">
-                            <i :class="item.icon"></i>
-                            <span slot="title">{{ item.name }}</span>
+                    <template v-if="item.children && item.meta.flag=='1'">
+                        <el-menu-item :index="item.children[0].path">
+                            <i :class="item.meta.icon"></i>
+                            <span slot="title">{{ item.children[0].name }}</span>
                         </el-menu-item>
                     </template>
                 </template>
@@ -54,44 +54,24 @@
                 navList:[
                     {
                         name:'首页',
-                        path:'dashboard',
-                        icon:'el-icon-s-home'
-                    },
-                    {
-                        name:'小说信息',
-                        path:'novle',
-                        icon:'el-icon-pie-chart',
+                        path:'/',
+                        meta:{title:'首页',icon:'el-icon-home',flag:'1'},
                         children:[
                             {
-                                name:'小说信息',
-                                path:'novelInfo',
-                                // children:[
-                                //     {
-                                //         name:'选项2-1',
-                                //         path:'2-11'
-                                //     }
-                                // ]
-                            },
-                            {
-                                name:'小说类型',
-                                path:'novelType'
+                                name:'首页',
+                                path:'dashboard',
+                                meta:{title:'首页', icon:''}
                             }
                         ]
                     },
                     {
                         name:'用户信息',
                         path:'user',
-                        icon:'el-icon-user',
+                        meta:{title:'用户信息',icon:'el-icon-user',flag:'2'},
                         children:[
                             {
                                 name:'用户信息',
                                 path:'userInfo',
-                                // children:[
-                                //     {
-                                //         name:'选项3-1',
-                                //         path:'3-11'
-                                //     }
-                                // ]
                             }
                         ]
                     },
@@ -118,9 +98,9 @@
             }
         },
         mounted(){
-            if(this.collapse==false){
-
-            }
+            this.$store.state.routers.splice(0,1);
+            console.log(this.$store.state.routers);
+            this.navList=this.$store.state.routers
         },
         methods:{
             handleOpen(key, keyPath) {
@@ -129,28 +109,6 @@
             handleClose(key, keyPath) {
                 // console.log(key, keyPath);
             },
-            //选中菜单
-            // selectMenu(index,indexPath){
-            //     // console.log(index,indexPath)
-            //     this.navList.forEach((item)=>{
-            //         if(item.path==index){
-            //             this.routeName=item.name;
-            //         }else if(item.children){
-            //             this.setName(item.children,index)
-            //         }
-            //     })
-            //     console.log(this.routeName)
-            //     localStorage.setItem('routeName',this.routeName);
-            // },
-            // //递归查找路由名称
-            // setName(arr,route){
-            //     arr.forEach((tip)=>{
-            //         if(tip.path==route){
-            //             // this.routeList.push(tip.name)
-            //             this.routeName=tip.name;
-            //         }
-            //     })
-            // }
         }
     }
 </script>

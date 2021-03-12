@@ -3,7 +3,7 @@ import router from '@/router'
 import {  Message} from 'element-ui';//使用于vue项目中Toaset进行错误提示
 
 const instance = axios.create({
-    baseURL: 'http:localhost:8080',
+    baseURL: '/',
     timeout: 2000,
     // headers: {'X-Custom-Header': 'foobar'}
 });
@@ -37,7 +37,7 @@ instance.interceptors.response.use(function (response) {
         case 403:
             Message.error('拒绝访问');
         break
-        case 500:  //可以使用其他的提示框架，根据环境使用，MessageBox弹窗可执行promise操作，使在点击确定后执行某些操作
+        case 500:
             Message.error('服务器错误');
         break
         case 404:

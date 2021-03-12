@@ -12,6 +12,8 @@ Vue.use(ElementUI);
 import 'lib-flexible/flexible.js'
 Vue.config.productionTip = false
 
+import '@/permission'
+
 new Vue({
   router,
   store,

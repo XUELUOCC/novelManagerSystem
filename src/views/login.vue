@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import {routerApi} from '@/api'
     export default {
         name: "login",
         data(){
@@ -83,16 +84,16 @@
             //登录
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
-                    console.log('gggggg')
+                    // console.log('gggggg')
                     if (valid) {
                         this.$message({
                             message: '登录成功',
                             type: 'success'
                         });
+                        // console.log('aaaa')
                         let token='tokenhabdsfvkabv'
                         this.$store.commit('setToken',token);
-                        this.$router.push('/')
-                        console.log(this.$store.state.token)
+                        this.$router.push({path:'/'})
                     } else {
                         this.$message.error('登录失败');
                         return false;
