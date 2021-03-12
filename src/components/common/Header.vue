@@ -59,17 +59,16 @@
                 bus.$emit('collapse',this.collapse)
             },
             //登出注销
-            Loginout(){
-                this.$router.push('/login');
+            loginout(){
                 this.$store.commit('delToken');
-                this.$store.commit('delRouter');
+                this.$router.push('/login');
             },
             //个人信息
             userInfo(){
 
             },
             handleLogin(command){
-                return command==='loginout'? this.Loginout():this.userInfo()
+                return command==='loginout'? this.loginout():this.userInfo()
             },
             //全屏
             screen(){

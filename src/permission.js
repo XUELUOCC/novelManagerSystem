@@ -1,10 +1,9 @@
 import router from './router'
 import store from './store'
 
-
 const whiteList = ['/login'] // no redirect whitelist  白名单，不在侧边栏中显示的路由
 
-window.hasRoutes=false;
+// window.hasRoutes=false;
 router.beforeEach(async(to,from,next)=> {
     console.log('wwwww')
     let token = store.state.token;
@@ -38,6 +37,7 @@ router.beforeEach(async(to,from,next)=> {
         if (whiteList.indexOf(to.path) !== -1) {
             next()
         } else {
+            console.log('sssss')
             next(`/login?redirect=${to.path}`)
         }
     }
