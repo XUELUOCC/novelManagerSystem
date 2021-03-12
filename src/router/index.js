@@ -17,7 +17,7 @@ export const routes = [
     name: '首页',
     redirect: '/dashboard',
     component: Home,
-    meta:{title:'首页', icon:'el-icon-s-home',flag:'1'},
+    meta:{title:'首页', icon:'el-icon-s-home',flag:'1'},   //flag判断是否是一级（flag:'1'）还是二级路由（flag:'2'），一级路由不需要侧边栏的子菜单，为二级路由需要侧边栏的子菜单
     children:[
         {
           path:'/dashboard',
