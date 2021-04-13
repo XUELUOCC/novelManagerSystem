@@ -15,3 +15,11 @@ export const routerApi =(query)=>{
         parmas:query
     });
 }
+
+export const getList=(query)=>{
+    return request({
+        url:'/api/list',
+        method:'get',
+        params:query
+    })
+}

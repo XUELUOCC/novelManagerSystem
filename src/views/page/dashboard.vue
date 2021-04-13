@@ -16,7 +16,7 @@
 
 <script>
     import tableModule from '../../components/common/tableModule'
-    import {testApi} from "../../api";
+    import {testApi,getList} from "../../api";
 
     export default {
         name: "dashboard",
@@ -92,7 +92,10 @@
                 let params={
                     id:'1'
                 }
-                testApi(params).then((res)=>{
+                // testApi(params).then((res)=>{
+                //     console.log(res)
+                // })
+                getList(params).then((res)=>{
                     console.log(res)
                 })
             }
