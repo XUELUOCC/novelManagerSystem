@@ -14,6 +14,9 @@ Vue.config.productionTip = false
 
 import '@/permission'
 
+import JsEncrypt from 'jsencrypt'
+Vue.prototype.$jsEncrypt = JsEncrypt
+
 new Vue({
   router,
   store,

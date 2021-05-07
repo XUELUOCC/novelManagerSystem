@@ -14,11 +14,14 @@
     "koa-better-body": "^3.3.9",
     "koa-convert": "^2.0.0",
     "koa-router": "^10.0.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "koa-static-cache": "^5.1.4"
   },
   "dependencies": {
     "koa-body": "^4.2.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-websocket": "^6.0.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "koa2-formidable": "^1.0.3"
   }
 }

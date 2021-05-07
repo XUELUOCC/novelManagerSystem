@@ -19,6 +19,10 @@
             <div class="websocket">
                 <el-button type="primary" @click="sendWebsocket">发送websocket</el-button>
             </div>
+
+            <div class="uploadBlob">
+                <el-button type="primary" @click="getExcel">下载excel文件</el-button>
+            </div>
             
 
         </div>
@@ -34,8 +38,10 @@
 </template>
 
 <script>
+import {JSEncrypt} from 'jsencrypt'
+import encryptLong from 'encryptlong'
     import tableModule from '../../components/common/tableModule'
-    import {testApi,getList} from "../../api";
+    import {testApi,getList,uploadBlob} from "../../api";
     import websocket from '@/js/websocket'
     export default {
         name: "dashboard",
@@ -45,6 +51,7 @@
         data(){
             return {
                 fileList: [],// [{name: '', url: ''}]
+                dtrings:1,
                 tableData:[
                     {
                         name:'名称1',
@@ -101,11 +108,22 @@
                 }
             }
         },
+        mounted(){
+            // let a=this.RSAencrypt('aaaaa')
+            // console.log(a)
+            // // let a=this.str
+            // if(a){
+            //     this.RSAdecrypt(a)
+            // }
+            // this.RSAdecrypt(this.str)
+            
+            this.test()
+        },
         methods:{
             //图片上传
             submitUpload() {
                 this.$refs.upload.submit();
-            },
+            },                                                                                                                                                                                                                                                                             
             handleRemove(file, fileList) {
                 console.log(file, fileList);
             },
@@ -135,7 +153,23 @@
                  let uid='111';
                 let content='客户端发送的内容'
                 websocket.Send(uid,content)
-            }
+            },
+
+            //测试uploadBlob
+            getExcel(){
+                uploadBlob({},'test.xls').then((res)=>{
+                     //创建一个隐藏的a连接，
+                    const link = document.createElement('a');
+                    let blob = new Blob([res.data], {type: 'application/vnd.ms-excel'});
+                    link.style.display = 'none';
+                    //设置连接
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'excel文件'; 
+                    document.body.appendChild(link);
+                    //模拟点击事件
+                    link.click();
+                })
+            },
         }
     }
 </script>
@@ -169,6 +203,9 @@
     display: block;
   }
   .upload{
+      margin-top:20px;
+  }
+  .uploadBlob{
       margin-top:20px;
   }
 </style>

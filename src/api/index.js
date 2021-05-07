@@ -23,3 +23,12 @@ export const getList=(query)=>{
         params:query
     })
 }
+
+export const uploadBlob=(query,name)=>{
+    return request({
+        url:'/api/uploadBlob/'+name,
+        method:'get',
+        responseType:'blob',
+        params:query
+    })
+}

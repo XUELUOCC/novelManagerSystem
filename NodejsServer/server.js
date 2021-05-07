@@ -1,6 +1,11 @@
 const koa=require('koa');
 const router=require('koa-router')();
 const koaBody=require('koa-body')
+
+const staticCache=require('koa-static-cache')
+const Bodyparser=require('koa-bodyparser')
+const Formidable =require('koa2-formidable')
+
 const fs=require('fs')
 const pathlib=require('path')
 const cors=require('koa2-cors')
@@ -39,8 +44,19 @@ server.use(cors({
 
 //上传文件路由
 let upload=require('./router/upload');
-
 router.use('/api',upload.routes())
+
+//创建blob文件流，前端接收
+server.use(Bodyparser())  //解析post请求，获取参数
+server.use(Formidable())  //解析fordata数据，即获取ctx.request.body,ctx.request.files,无此插件，其值为空
+server.use(staticCache(pathlib.resolve('./files')))
+
+let uploadBlob=require('./router/uploadBlob');
+router.use('/api',uploadBlob.routes())
+
+router.get('/api/list',async(ctx,next)=>{
+    ctx.response.body='测试测试测试内容'
+})
 
 //启动路由
 server.use(router.routes()).use(router.allowedMethods());  //使用其他路由
