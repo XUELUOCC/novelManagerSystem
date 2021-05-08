@@ -1,0 +1,123 @@
+商户，银行，第三方公司（交易信息，明细信息），用户
+
+修改： api.js,  PermissionList.vue,  RoleUserList.vue,  (./modules/UserRoleModal.vue),  
+PermissionList.vue:
+	--- methods: {
+      loadData() {
+        this.dataSource = []
+        getPermissionList().then((data) => {
+          let response=this.Rsa.decrypt(data)
+          response=Base64.decode(response)
+          let res=JSON.parse(response)
+          // console.log(response)
+          if (res.success) {
+            console.log(res.result)
+            this.dataSource = res.result
+          }
+        })
+      },
+
+RoleUserList.vue:
+	---methods: {
+      //初始化数据加载(修改新添加的方法)
+      getData(){
+        let params = this.getQueryParams2()//查询条件
+        params.roleId = this.currentRoleId
+        this.loading = true
+        postAction(this.url.list,params).then((res)=>{
+          let response=this.Rsa.decrypt(res)
+          response=Base64.decode(response)
+          response=JSON.parse(response)
+          // console.log(response)
+          this.dataSource=response.result.records
+        })
+      },
+
+api.js:	
+	---const queryTreeListForRole = (params)=>postAction("/sys/role/queryTreeList",params);
+	const queryRolePermission = (params)=>postAction("/sys/permission/queryRolePermission",params);
+
+银行：
+
+小程序/app
+角色：运营公司，收钱的用户
+商户：注册账户，绑定银行卡，实时交易（交易完成，积分延迟确认之后才发生改变）
+
+后台：银行，运营商，
+
+
+公众号：商户，客户 
+功能：查询历史账单
+商户注册（可能只有登录）
+商户登录关注（检查卡和积分，积分和身份证有关）-- 线下二维码登录/商户确认信息，出现二维码 登录 -- 
+查商户交易明细（到账，积分明细）
+
+
+指纹登录
+指纹支付
+READ_CONTACTS
+
+注册，用户管理，权限管理，积分管理（查询历史账单，查询积分到账）
+postAction("/sys/permission/getUserPermissionByToken")
+
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmADg2zz69sH9gr/tR2DA
+pQ7bVOlTIBI3sZQVy0mKEkpxGqXo4XaHnaSiGFXT/8SO9ad1xD+q3AuoLNGEAR5j
+/gFP1G3fUkLeMuFjLaDSq3xfPodTHFTnxLju6QTXk5m5T62H7gMmweLfCgndgyMM
+3qt3wkCSphDtFf6ph4e/oQRD/VtzxQhfVvamLHS2DQASCf3JGWFg+E+TiYX/z9ah
+zCIHfxsgEdapeAnO/LgAEjZyuwy4FwCPrSDj0DtJuKiR3ixIkRzFcTK+8j++mTPa
+Vp5HzhgIqxbzOVthWWpmzQ1aRcKf4ytVTvJwpIRlHyQY6X9A9RR3RtPPrq9lg1E2
+rQIDAQAB
+-----END PUBLIC KEY-----
+
+-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCYAODbPPr2wf2C
+v+1HYMClDttU6VMgEjexlBXLSYoSSnEapejhdoedpKIYVdP/xI71p3XEP6rcC6gs
+0YQBHmP+AU/Ubd9SQt4y4WMtoNKrfF8+h1McVOfEuO7pBNeTmblPrYfuAybB4t8K
+Cd2DIwzeq3fCQJKmEO0V/qmHh7+hBEP9W3PFCF9W9qYsdLYNABIJ/ckZYWD4T5OJ
+hf/P1qHMIgd/GyAR1ql4Cc78uAASNnK7DLgXAI+tIOPQO0m4qJHeLEiRHMVxMr7y
+P76ZM9pWnkfOGAirFvM5W2FZambNDVpFwp/jK1VO8nCkhGUfJBjpf0D1FHdG08+u
+r2WDUTatAgMBAAECggEACo/1EAb6wW7VeOJxUIZunImdwBa+ifn6GMLbiNbBW2gE
+1/8zYYdlARVRljNQmfNEo9lRG6P48XV16Dde3t0HwbzBmVdRL1wqKIr041TLjtMD
+o0qwAcX8nPTk1RhbCoyiDeFXErjxVoO3T/FDjTtAR7DOj5cBGb0PXHnnud06+atA
+y/OjlRI5xuEyWPm1Ggbk3K5KtgwTS5FyRel8/kHFgiVLWBbKo3Qzug5Z3WSp+0Rf
+JQtS1nELOEZmdSkg2iIQ9RhKd1huhwFq4Fk9eDBowRcV4upjvbIVcHgFjm1EC3E8
+N2Gfxswed9otNXk9q9nirFTkBbs889ZbNAEMP1jMwQKBgQDFc+wJ6XyQw/Ugm2sP
+Bfrz0XrImglyVZo1ImFe/1T5gQif8XTejJS8tnRjn66x6fAOmvr7EwIchvrdVIpW
+FCNx1R1ytLXVXSNuu6gbvXNWd+qFtqY8J/yjSlG5xvYCjF6NMZaKPKZGby3SsF2G
+vlDIpHmYW3/MYXws9GihGhPQmQKBgQDFEwX7TOKN3ZqUn1AkECCAK4R/aQnUzApf
+rPmEYmVWrMEtPM49WM0LjBAyJtDmuhM2gxe0JZ3kg+90zONRrKz521d9LNm8Djd0
+/ZWfZ7uD5egYUwQk4FDjhX9drmc2ATN8bsx0hDwiGdt+J/TGCEGwYkcvQSQWisOC
+NyuoZOifNQKBgQCT35oBXlxMqoTU87A84xSrLtHOlBXJC7TeYC4eEAjahrkn15PX
+696kadxGk9soIPQIbCbUi8rEBI6x3VNw3cohwSI5un6HGSalEmL2y24qbsozc7OR
+T70TqWAFSq0JAYj6Iw4D3yIDk9X0eOLCO5uSeCMcaEIQlV2C6VPGexol2QKBgHZM
+UQ7kvCpEmAIXD9hWBexqMwL4XnpqcN+1yaH6HrLEyMEK+xJAN/VyglZYjpWxpM7Y
+KmZtHjaKLDeEtf/VE5B4ZjAxuBH2xrtnbWVes2UdoRDY5Gfubx/khuwJQNNeLTXI
+nNpkdmRR+TvlaD1nv2bN18U56RvO+EU2MPLIgArxAoGAUzfRtiPoJSV5Y+5EMj3o
+7gXq/gEjgxZb7GIi74YFsHawcRpAoGmDhVuRDyd3sLmO6xHku/tRK2u+jHRKnAbt
+DbmL3FsZKRb/QUULiLXMyPQQWAns+SfYBh+68RVPG3RBrPVOVq5yVswQJv1t6cZp
+JdzS0sd81KUahWiYdDwlkGI=
+-----END PRIVATE KEY-----
+
+
+、、
+base64
+//
+-----BEGIN PRIVATE KEY-----
+MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAM6rkAoPpiXfKe91
+zZyaXu6hmo+G8LGNjL7BMYcPRtJNvp9OdzLzAiQbT9/Mj8V7mbtCVx6dJaMXfhJF
+MwZBte5wLFOm9XOpW/Kvo0/BBSUbEpFSPcrhR07MNFV+ElZnmm7UC5VMEeMWBi0v
+P17zz8/nW9g9oS9Nx91nU7Pu0z3NAgMBAAECgYEAohOhzoIfRqwQ8x5rtVjLAlHy
+KIUm1dewfRh9gvHUFLGrwLuEd4xkLXTN2zFNvw4DrfuE3xlWnuSZljJ2pX168q5O
+ZZaLz015LoLy2XbiAWMrpt5PnDzqXyPYWieXniDdzhXsbw5QYln8/LSbOnlAu6x+
++b0aHc8tVvigdDAjE4ECQQDs8UnZnv5Lx+RFF32AmvMzijrE2fXk6R6ayNCfc/Wm
+ft1zR3EWIOLeAJDotWFKBkOQulivwUw8r/8FWi6YH0pZAkEA30r1N1hNWjBbqOus
+G+WzZx50B5b7wTim0+ujeQTMGdkq1Pf/f1z218YPbUBMLiUDb7OeIwEgC/87dOKa
+wPW4lQJBANX3dwcsituIIV07PzxZsPGEDFojsegLlHWWjr7Piq/VtMkbZMXk4Lo1
+rKZY1Qhx66XQgbIFToEnNZZxv83jw9ECQCIuJztBmRWlMWK6MK5UixHN55UB16fM
+ND1cZLmxskyCobvX+pRUdrSw7MucfAzUPaJrrFlPYshzWXaa+XVwJ8ECQQDm8spV
+OpbY1UGPG4BH4yHkExRF146dwOqw/1kQGU+hSb9rXUC/mt2evHjlV7ezAM/jK5Gh
+//AINo/gfVtx9V9e
+-----END PRIVATE KEY-----
+
+

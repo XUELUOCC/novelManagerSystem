@@ -31,7 +31,7 @@ app.listen(3000,()=>{
 });
 
 //上传文件
-server.use(koaBody({
+server.use(koaBody({   //会与Formidable插件发生冲突
     multipart:true,
     formidable:{
         maxFileSize:200*1024*1024
@@ -48,8 +48,8 @@ router.use('/api',upload.routes())
 
 //创建blob文件流，前端接收
 server.use(Bodyparser())  //解析post请求，获取参数
-server.use(Formidable())  //解析fordata数据，即获取ctx.request.body,ctx.request.files,无此插件，其值为空
-server.use(staticCache(pathlib.resolve('./files')))
+// server.use(Formidable())  //解析formdata数据，即获取ctx.request.body,ctx.request.files,无此插件，其值为空
+server.use(staticCache(__dirname+'/files'))
 
 let uploadBlob=require('./router/uploadBlob');
 router.use('/api',uploadBlob.routes())

@@ -4,6 +4,7 @@ const pathlib=require('path')
 
 router.post('/upload',async(ctx,next)=>{
     //上传单个文件
+    // console.log(ctx.request.body.files)
     const file=ctx.request.files.file;
     console.log(file)
     //创建读取流

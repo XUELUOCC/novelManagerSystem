@@ -117,7 +117,7 @@ import encryptLong from 'encryptlong'
             // }
             // this.RSAdecrypt(this.str)
             
-            this.test()
+            // this.test()
         },
         methods:{
             //图片上传
@@ -160,7 +160,8 @@ import encryptLong from 'encryptlong'
                 uploadBlob({},'test.xls').then((res)=>{
                      //创建一个隐藏的a连接，
                     const link = document.createElement('a');
-                    let blob = new Blob([res.data], {type: 'application/vnd.ms-excel'});
+                    console.log(res)
+                    let blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'});
                     link.style.display = 'none';
                     //设置连接
                     link.href = URL.createObjectURL(blob);

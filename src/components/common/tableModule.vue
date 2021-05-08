@@ -3,7 +3,7 @@
         <!--<div class="tableContent">-->
             <el-table
                     :data="tableData"
-                    height="100%"
+                    height="300px"
                     border
                     style="width: 100%">
                 <el-table-column
@@ -101,7 +101,7 @@
     }
     .tableContainer{
         width:100%;
-        height:75%;
+        /* height:75%; */
         /*position:relative;*/
     }
     .block{
